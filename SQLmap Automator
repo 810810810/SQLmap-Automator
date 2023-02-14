@@ -1,0 +1,47 @@
+#!/bin/bash
+
+echo "SQL Vulnerability Scanner"
+echo "========================"
+echo
+echo "Please choose from the following options:"
+echo
+echo "1. Run SQLmap with default options"
+echo "2. Run SQLmap with custom options"
+echo "3. Exit"
+echo
+read -p "Enter your choice: " choice
+
+if [ "$choice" == "1" ]; then
+  echo "Running SQLmap with default options..."
+  sqlmap -u $1
+elif [ "$choice" == "2" ]; then
+  echo "Running SQLmap with custom options..."
+  echo
+  echo "Please choose from the following options:"
+  echo
+  echo "1. Dump database"
+  echo "2. Crawl website"
+  echo "3. Reverse engineer database schema"
+  echo "4. Choose other options"
+  echo
+  read -p "Enter your choice: " subchoice
+
+  if [ "$subchoice" == "1" ]; then
+    echo "Dumping database..."
+    sqlmap -u $1 --dump
+  elif [ "$subchoice" == "2" ]; then
+    echo "Crawling website..."
+    sqlmap -u $1 --crawl
+  elif [ "$subchoice" == "3" ]; then
+    echo "Reverse engineering database schema..."
+    sqlmap -u $1 --schema
+  elif [ "$subchoice" == "4" ]; then
+    echo "Enter the options you want to use: "
+    read options
+    sqlmap -u $1 $options
+  else
+    echo "Invalid option. Exiting..."
+  fi
+else
+  echo "Exiting..."
+fi
